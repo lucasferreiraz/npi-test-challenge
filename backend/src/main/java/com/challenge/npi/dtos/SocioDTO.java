@@ -2,11 +2,23 @@ package com.challenge.npi.dtos;
 
 import com.challenge.npi.entities.Socio;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
 public class SocioDTO {
     
     private Long id;
+
+    @NotBlank
+    @Size(min = 5, max = 50, message = "Nome deve ter entre 5 e 50 caracteres")
     private String nome;
+
+    @NotNull
+    @PositiveOrZero(message = "O valor da renda deve ser maior ou igual a zero.")
     private Double renda;
+
     private Boolean ativo;
     
     public SocioDTO() {

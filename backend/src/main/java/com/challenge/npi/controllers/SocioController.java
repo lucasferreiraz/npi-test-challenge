@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.challenge.npi.dtos.SocioDTO;
 import com.challenge.npi.services.SocioService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/socio")
 public class SocioController {
@@ -40,7 +42,7 @@ public class SocioController {
     }
 
     @PostMapping
-    public ResponseEntity<SocioDTO> insert(@RequestBody SocioDTO dto) {
+    public ResponseEntity<SocioDTO> insert(@Valid @RequestBody SocioDTO dto) {
         dto = socioService.insert(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -52,7 +54,7 @@ public class SocioController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<SocioDTO> update(@PathVariable Long id, @RequestBody SocioDTO dto) {
+    public ResponseEntity<SocioDTO> update(@Valid @PathVariable Long id, @RequestBody SocioDTO dto) {
         dto = socioService.update(id, dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
