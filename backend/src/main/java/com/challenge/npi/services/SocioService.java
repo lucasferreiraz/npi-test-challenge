@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +19,8 @@ public class SocioService {
     private SocioRepository socioRepository;
 
     @Transactional(readOnly = true)
-    public Page<SocioDTO> findAllPaged(PageRequest PageRequest) {
-        Page<Socio> list = socioRepository.findAll(PageRequest);
+    public Page<SocioDTO> findAllPaged(Pageable pageable) {
+        Page<Socio> list = socioRepository.findAll(pageable);
         return list.map(socio -> new SocioDTO(socio));
     }
     
