@@ -1,15 +1,22 @@
 package com.challenge.npi.entities;
 
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "tb_socio")
 public class Socio {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     private Double renda;
     private Boolean ativo;
-
-    private List<Dependente> dependentes;
 
     public Socio() {
     }
@@ -51,14 +58,6 @@ public class Socio {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
-    }
-
-    public List<Dependente> getDependentes() {
-        return dependentes;
-    }
-
-    public void setDependentes(List<Dependente> dependentes) {
-        this.dependentes = dependentes;
     }
 
     @Override
