@@ -27,6 +27,7 @@ public class SocioController {
     @Autowired
     private SocioService socioService;
 
+    @GetMapping
     public ResponseEntity<Page<SocioDTO>> findAll(Pageable pageable) {
         Page<SocioDTO> list = socioService.findAllPaged(pageable);
         return new ResponseEntity<Page<SocioDTO>>(list, HttpStatus.OK);

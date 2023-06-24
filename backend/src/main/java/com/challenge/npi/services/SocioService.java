@@ -30,6 +30,7 @@ public class SocioService {
         return new SocioDTO(optional.get());
     }
 
+    @Transactional
     public SocioDTO insert(SocioDTO dto) {
         Socio socio = new Socio();
         copyDtoToEntity(dto, socio);
@@ -38,6 +39,7 @@ public class SocioService {
         return new SocioDTO(socio);
     }
 
+    @Transactional
     public SocioDTO update(Long id, SocioDTO dto) {
         Socio socio = socioRepository.getReferenceById(id);
         copyDtoToEntity(dto, socio);
