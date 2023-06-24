@@ -5,8 +5,6 @@ public class Dependente {
     private Long id;
     private String nome;
     private Integer idade;
-
-    private Socio socio;
     
     public Dependente() {
     }
@@ -39,14 +37,6 @@ public class Dependente {
 
     public void setIdade(Integer idade) {
         this.idade = idade;
-    }
-
-    public Socio getSocio() {
-        return socio;
-    }
-
-    public void setSocio(Socio socio) {
-        this.socio = socio;
     }
 
     @Override
