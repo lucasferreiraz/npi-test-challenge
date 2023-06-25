@@ -1,5 +1,9 @@
 package com.challenge.npi.dtos;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.challenge.npi.entities.Dependente;
 import com.challenge.npi.entities.Socio;
 
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +12,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 public class SocioDTO {
-    
+
     private Long id;
 
     @NotBlank
@@ -20,7 +24,9 @@ public class SocioDTO {
     private Double renda;
 
     private Boolean ativo;
-    
+
+    private List<DependenteDTO> dependentes = new ArrayList<>();
+
     public SocioDTO() {
     }
 
@@ -36,6 +42,11 @@ public class SocioDTO {
         this.nome = socio.getNome();
         this.renda = socio.getRenda();
         this.ativo = socio.getAtivo();
+    }
+
+    public SocioDTO(Socio socio, List<Dependente> dependentes) {
+        this(socio);
+        dependentes.forEach(dependente -> this.dependentes.add(new DependenteDTO(dependente)));
     }
 
     public Long getId() {
@@ -68,5 +79,13 @@ public class SocioDTO {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public List<DependenteDTO> getDependentes() {
+        return dependentes;
+    }
+
+    public void setDependentes(List<DependenteDTO> dependentes) {
+        this.dependentes = dependentes;
     }
 }

@@ -27,14 +27,14 @@ public class SocioService {
     @Transactional(readOnly = true)
     public Page<SocioDTO> findAllPaged(Pageable pageable) {
         Page<Socio> list = socioRepository.findAll(pageable);
-        return list.map(socio -> new SocioDTO(socio));
+        return list.map(socio -> new SocioDTO(socio, socio.getDependentes()));
     }
 
     @Transactional(readOnly = true)
     public SocioDTO findById(Long id) {
         Optional<Socio> optional = socioRepository.findById(id);
         Socio socio = optional.orElseThrow(() -> new ResourceNotFoundException("Resource not found."));
-        return new SocioDTO(socio);
+        return new SocioDTO(socio, socio.getDependentes());
     }
 
     @Transactional
