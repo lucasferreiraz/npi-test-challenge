@@ -1,6 +1,6 @@
 export interface Socio {
-  id: number,
+  id: number | string,
   nome: string,
-  renda: number,
-  ativo: boolean
+  renda: number | string,
+  ativo: boolean | string
 }

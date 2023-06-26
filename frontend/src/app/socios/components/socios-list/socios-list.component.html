@@ -38,7 +38,7 @@
         mat-icon-button
         color="primary"
         aria-label="Editar Curso"
-        
+        (click)="onEdit(socio)"
       >
         <mat-icon>edit</mat-icon>
       </button>
@@ -47,7 +47,7 @@
         mat-icon-button
         color="warn"
         aria-label="Remover Curso"
-        
+        (click)="onDelete(socio)"
       >
         <mat-icon>delete</mat-icon>
       </button>

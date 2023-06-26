@@ -11,6 +11,8 @@ export class SociosListComponent {
 
   @Input() socios: Socio[] = []
   @Output() add = new EventEmitter(false)
+  @Output() edit = new EventEmitter(false)
+  @Output() delete = new EventEmitter(false)
 
   displayedColumns = ["id", "nome", "renda", "ativo", "actions"]
 
@@ -19,5 +21,13 @@ export class SociosListComponent {
 
   onAdd() {
     this.add.emit(true)
+  }
+
+  onEdit(socio: Socio) {
+    this.edit.emit(socio)
+  }
+
+  onDelete(socio: Socio) {
+    this.delete.emit(socio)
   }
 }
