@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { Socio } from '../../model/socio';
 import { ActivatedRoute } from '@angular/router';
 import { Dependente } from '../../model/dependente';
+import { DependentesService } from '../../services/dependentes.service';
 
 @Component({
   selector: 'app-socio-form',
@@ -17,7 +18,8 @@ export class SocioFormComponent implements OnInit {
   form!: FormGroup
 
   constructor(private formBuilder: FormBuilder,
-    private service: SociosService,
+    private socioService: SociosService,
+    private dependenteService: DependentesService,
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute) {
@@ -50,8 +52,17 @@ export class SocioFormComponent implements OnInit {
   }
 
   removeDependente(index: number) {
-    const lessons = this.form.get('dependentes') as UntypedFormArray;
-    lessons.removeAt(index);
+    const dependentes = this.form.get('dependentes') as UntypedFormArray;
+    const dependenteId = dependentes.at(index).value.id;
+
+    if (dependenteId) {
+      this.dependenteService.delete(dependenteId).subscribe(() => {
+        dependentes.removeAt(index);
+        this.snackBar.open('Dependente removido com sucesso.', '', { duration: 4000 });
+      }, () => {
+        this.snackBar.open('Erro ao remover dependente.', '', { duration: 4000 });
+      });
+    }
   }
 
   getDependentesFormArray() {
@@ -79,7 +90,7 @@ export class SocioFormComponent implements OnInit {
   onSubmit() {
     const formValue = this.form.value;
 
-    this.service.save(formValue).subscribe(result => {
+    this.socioService.save(formValue).subscribe(result => {
       this.onSucess()
       console.log(result)
     },
