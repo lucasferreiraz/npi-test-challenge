@@ -20,6 +20,6 @@ export class SocioResolver implements Resolve<Socio> {
     if(route.params && route.params['id']) {
       return this.service.findById(route.params['id'])
     }
-    return of({id: '', nome: '', renda: '', ativo: ''});
+    return of({id: '', nome: '', renda: '', ativo: '', dependentes: []});
   }
 }

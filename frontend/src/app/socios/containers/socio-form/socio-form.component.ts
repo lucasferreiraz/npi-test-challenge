@@ -20,11 +20,11 @@ export class SocioFormComponent implements OnInit {
       Validators.minLength(5),
       Validators.maxLength(50),
     ]),
-    renda: new FormControl<string | number>(null, [
+    renda: new FormControl<number | string>(null, [
       Validators.required,
       Validators.min(0)
     ]),
-    ativo: new FormControl<string | boolean>(null, [
+    ativo: new FormControl<boolean | string>(null, [
       Validators.required
     ])
   })
@@ -42,7 +42,7 @@ export class SocioFormComponent implements OnInit {
       id: socio.id,
       nome: socio.nome,
       renda: socio.renda,
-      ativo: socio.ativo
+      ativo: socio.ativo ? 'true' : 'false'
     })
   }
 
@@ -68,5 +68,29 @@ export class SocioFormComponent implements OnInit {
   private onError() {
     this.snackBar.open("Erro ao salvar Sócio.", '', { duration: 4000 })
     this.onCancel()
+  }
+
+  getErrorMessage(fieldName: string) {
+    const field = this.form.get(fieldName);
+
+    if (field?.hasError('required')) {
+      return 'Campo obrigatório';
+    }
+
+    if (field?.hasError('min')) {
+      return 'Valor deve ser maior ou igual a zero.';
+    }
+
+    if (field?.hasError('minlength')) {
+      const requiredLength: number = field.errors ? field.errors['minlength']['requiredLength'] : 5;
+      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres.`;
+    }
+
+    if (field?.hasError('maxlength')) {
+      const requiredLength: number = field.errors ? field.errors['maxlength']['requiredLength'] : 50;
+      return `Tamanho máximo excedido de ${requiredLength} caracteres.`;
+    }
+
+    return 'Campo Inválido';
   }
 }

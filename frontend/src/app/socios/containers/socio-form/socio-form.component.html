@@ -5,11 +5,18 @@
 
     <form [formGroup]="form" class="min-width">
       <mat-form-field class="full-width">
-        <input matInput placeholder="Nome" formControlName="nome">
+        <input matInput placeholder="Nome" formControlName="nome" #nome>
+        <mat-hint align="end">{{ nome.value?.length || 0 }} / 50</mat-hint>
+        <mat-error *ngIf="form.get('nome')?.invalid">{{
+          getErrorMessage("nome")
+        }}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <input matInput placeholder="Renda" formControlName="renda">
+        <mat-error *ngIf="form.get('renda')?.invalid">{{
+          getErrorMessage("renda")
+        }}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">

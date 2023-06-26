@@ -46,9 +46,9 @@ export class SociosComponent {
   }
 
   onRemove(socio: Socio) {
-    this.refresh()
     this.sociosService.delete(socio.id as number).subscribe(
       () => {
+        this.refresh()
         this.snackBar.open("Sócio deletado com sucesso.", '', {
           duration: 4000,
           verticalPosition: 'top',
