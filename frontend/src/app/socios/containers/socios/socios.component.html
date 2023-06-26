@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-content>
+
+    <mat-toolbar color="primary">
+      Sócios
+    </mat-toolbar>
+
+    <app-socios-list [socios]="socios" (add)="onAdd()"></app-socios-list>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="totalElements"
+      (page)="nextPage($event)">
+    </mat-paginator>
+
+  </mat-card-content>
+</mat-card>
