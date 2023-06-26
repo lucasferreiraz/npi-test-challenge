@@ -1,9 +1,8 @@
 package com.challenge.npi.entities;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,8 +33,8 @@ public class Socio {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL)
-    private List<Dependente> dependentes;
+    @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dependente> dependentes = new ArrayList<>();
 
     public Socio() {
     }
