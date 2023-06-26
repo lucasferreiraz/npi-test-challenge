@@ -13,7 +13,7 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
-        <input matInput placeholder="Renda" formControlName="renda">
+        <input matInput placeholder="Renda" formControlName="renda" type="number">
         <mat-error *ngIf="form.get('renda')?.invalid">{{
           getErrorMessage("renda")
         }}</mat-error>
@@ -44,12 +44,19 @@
             <mat-form-field class="full-width">
               <mat-label>Nome do Dependente</mat-label>
               <input matInput formControlName="nome" />
+              <mat-error *ngIf="getDependentesFormArray()[i].get('nome').invalid">
+                Campo inválido
+              </mat-error
+              >
             </mat-form-field>
           </td>
           <td style="width: 30%">
             <mat-form-field class="full-width">
               <mat-label>Idade</mat-label>
-              <input matInput formControlName="idade" />
+              <mat-error *ngIf="getDependentesFormArray()[i].get('idade').invalid">
+                Idade inválida
+              </mat-error>
+              <input matInput formControlName="idade" type="number"/>
             </mat-form-field>
           </td>
           <td>

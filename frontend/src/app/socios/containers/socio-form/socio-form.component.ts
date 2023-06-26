@@ -82,8 +82,15 @@ export class SocioFormComponent implements OnInit {
   private createDependente(dependente: Dependente = { id: null, nome: '', idade: null }) {
     return this.formBuilder.group({
       id: [dependente.id],
-      nome: [dependente.nome],
-      idade: [dependente.idade]
+      nome: [dependente.nome, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(50)
+      ]],
+      idade: [dependente.idade, [
+        Validators.required,
+        Validators.min(0)
+      ]]
     })
   }
 
