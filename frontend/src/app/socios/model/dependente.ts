@@ -1,5 +1,5 @@
 export interface Dependente {
-  id: number | string,
+  id: number,
   nome: string,
-  idade: number | string
+  idade: number
 }

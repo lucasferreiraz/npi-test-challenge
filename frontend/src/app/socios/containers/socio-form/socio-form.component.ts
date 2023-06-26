@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
 import { SociosService } from '../../services/socios.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { Socio } from '../../model/socio';
 import { ActivatedRoute } from '@angular/router';
+import { Dependente } from '../../model/dependente';
 
 @Component({
   selector: 'app-socio-form',
@@ -13,21 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SocioFormComponent implements OnInit {
 
-  form = this.formBuilder.group({
-    id: new FormControl<string | number>(null),
-    nome: new FormControl<string>(null, [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(50),
-    ]),
-    renda: new FormControl<number | string>(null, [
-      Validators.required,
-      Validators.min(0)
-    ]),
-    ativo: new FormControl<boolean | string>(null, [
-      Validators.required
-    ])
-  })
+  form!: FormGroup
 
   constructor(private formBuilder: FormBuilder,
     private service: SociosService,
@@ -38,11 +25,54 @@ export class SocioFormComponent implements OnInit {
 
   ngOnInit(): void {
     const socio: Socio = this.route.snapshot.data['socio']
-    this.form.setValue({
-      id: socio.id,
-      nome: socio.nome,
-      renda: socio.renda,
-      ativo: socio.ativo ? 'true' : 'false'
+
+    this.form = this.formBuilder.group({
+      id: [socio.id],
+      nome: [socio.nome, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(50),
+      ]],
+      renda: [socio.renda, [
+        Validators.required,
+        Validators.min(0)
+      ]],
+      ativo: [socio.ativo ? 'true' : 'false', [
+        Validators.required
+      ]],
+      dependentes: this.formBuilder.array(this.retrieveDependente(socio))
+    })
+  }
+
+  addNewDependente() {
+    const dependentes = this.form.get('dependentes') as UntypedFormArray
+    dependentes.push(this.createDependente())
+  }
+
+  removeDependente(index: number) {
+    const lessons = this.form.get('dependentes') as UntypedFormArray;
+    lessons.removeAt(index);
+  }
+
+  getDependentesFormArray() {
+    return (<UntypedFormArray>this.form.get('dependentes')).controls;
+  }
+
+  private retrieveDependente(socio: Socio) {
+    const dependentes = [];
+    if (socio?.dependentes) {
+      socio.dependentes.forEach(dependente => dependentes.push(this.createDependente(dependente)));
+    } else {
+      dependentes.push(this.createDependente());
+    }
+    return dependentes;
+  }
+
+  private createDependente(dependente: Dependente = { id: null, nome: '', idade: null }) {
+    return this.formBuilder.group({
+      id: [dependente.id],
+      nome: [dependente.nome],
+      idade: [dependente.idade]
     })
   }
 
