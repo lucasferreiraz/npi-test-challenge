@@ -8,6 +8,7 @@ import { SocioFormComponent } from './containers/socio-form/socio-form.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { SociosListComponent } from './components/socios-list/socios-list.component';
 import { CurrencyBrPipe } from '../pipes/currency-br.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CurrencyBrPipe } from '../pipes/currency-br.pipe';
     CommonModule,
     SociosRoutingModule,
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class SociosModule { }
