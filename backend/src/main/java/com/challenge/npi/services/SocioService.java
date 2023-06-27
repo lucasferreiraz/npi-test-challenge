@@ -98,18 +98,15 @@ public class SocioService {
                 List<DependenteDTO> dependentesAtualizados = new ArrayList<>();
                 for (DependenteDTO dependenteDTO : dto.getDependentes()) {
                     if (dependenteDTO.getId() != null) {
-                        // Dependente existente, chamar o serviço DependenteService para atualizar
                         DependenteDTO dependenteAtualizado = dependenteService.update(dependenteDTO.getId(), dependenteDTO);
                         dependentesAtualizados.add(dependenteAtualizado);
                     } else {
-                        // Novo dependente, chamar o serviço DependenteService para inserir
                         DependenteDTO dependenteInserido = dependenteService.insert(dependenteDTO);
                         dependentesAtualizados.add(dependenteInserido);
                     }
                 }
                 dto.setDependentes(dependentesAtualizados);
             }
-
 
             socio = socioRepository.save(socio);
 

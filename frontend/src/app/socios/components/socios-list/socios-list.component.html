@@ -12,7 +12,7 @@
 
   <ng-container matColumnDef="renda">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Renda </mat-header-cell>
-    <mat-cell *matCellDef="let socio"> {{socio.renda | currency:'BRL':'symbol':'1.2-2' }} </mat-cell>
+    <mat-cell *matCellDef="let socio"> {{socio.renda | currencyBr }} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="ativo">

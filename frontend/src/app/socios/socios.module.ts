@@ -7,12 +7,14 @@ import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SocioFormComponent } from './containers/socio-form/socio-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SociosListComponent } from './components/socios-list/socios-list.component';
+import { CurrencyBrPipe } from '../pipes/currency-br.pipe';
 
 @NgModule({
   declarations: [
     SociosComponent,
     SocioFormComponent,
-    SociosListComponent
+    SociosListComponent,
+    CurrencyBrPipe
   ],
   imports: [
     CommonModule,
