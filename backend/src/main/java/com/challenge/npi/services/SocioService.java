@@ -1,7 +1,5 @@
 package com.challenge.npi.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -18,6 +16,7 @@ import com.challenge.npi.dtos.DependenteDTO;
 import com.challenge.npi.dtos.SocioDTO;
 import com.challenge.npi.entities.Dependente;
 import com.challenge.npi.entities.Socio;
+import com.challenge.npi.repositories.DependenteRepository;
 import com.challenge.npi.repositories.SocioRepository;
 import com.challenge.npi.services.exceptions.DatabaseException;
 import com.challenge.npi.services.exceptions.ResourceNotFoundException;
@@ -34,6 +33,9 @@ public class SocioService {
 
     @Autowired
     private DependenteService dependenteService;
+
+    @Autowired
+    private DependenteRepository dependenteRepository;
 
     @Transactional(readOnly = true)
     public Page<SocioDTO> findAllPaged(Pageable pageable) {
@@ -91,21 +93,19 @@ public class SocioService {
         try {
             LOGGER.info("Updating Socio entity with ID: {}", id);
 
-            Socio socio = socioRepository.getReferenceById(id);
+            Socio socio = socioRepository.findById(id).get();
             copyDtoToEntity(dto, socio);
 
             if (dto.getDependentes() != null && !dto.getDependentes().isEmpty()) {
-                List<DependenteDTO> dependentesAtualizados = new ArrayList<>();
                 for (DependenteDTO dependenteDTO : dto.getDependentes()) {
                     if (dependenteDTO.getId() != null) {
-                        DependenteDTO dependenteAtualizado = dependenteService.update(dependenteDTO.getId(), dependenteDTO);
-                        dependentesAtualizados.add(dependenteAtualizado);
+                        dependenteService.update(dependenteDTO.getId(), dependenteDTO);
                     } else {
-                        DependenteDTO dependenteInserido = dependenteService.insert(dependenteDTO);
-                        dependentesAtualizados.add(dependenteInserido);
+                        Dependente dependente = dependenteDTO.toEntity();
+                        dependente.setSocio(socio);
+                        dependenteRepository.save(dependente);
                     }
                 }
-                dto.setDependentes(dependentesAtualizados);
             }
 
             socio = socioRepository.save(socio);

@@ -57,4 +57,8 @@ public class DependenteDTO {
     public void setIdade(Integer idade) {
         this.idade = idade;
     }
+
+    public Dependente toEntity() {
+        return new Dependente(this.id, this.nome, this.idade);
+    }
 }
