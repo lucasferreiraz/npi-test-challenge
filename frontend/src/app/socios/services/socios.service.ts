@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Socio } from '../model/socio';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SociosService {
 
-  private readonly API_URL = 'http://localhost:8080/'
+  private readonly API_URL = environment.apiUrl
 
   constructor(private httpClient: HttpClient) {
 	}
