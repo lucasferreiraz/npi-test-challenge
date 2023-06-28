@@ -20,7 +20,7 @@ services:
   # Spring Boot Application
   # ====================================================================================================================
   npi-docker:
-    build: ./backend
+    # build: ./backend
     container_name: dev-npi
     image: lucasferreiraz/npi-api:1.0
     ports:
@@ -31,6 +31,19 @@ services:
       db-password: 1234567
     depends_on:
       - pg-docker
+    networks:
+      - dev-network
+  # ====================================================================================================================
+  # Angular Application
+  # ====================================================================================================================
+  front-docker:
+    # build: ./frontend
+    container_name: dev-front
+    image: lucasferreiraz/npi-front:1.0
+    ports:
+      - 4200:80
+    depends_on:
+      - npi-docker
     networks:
       - dev-network
 # ======================================================================================================================
