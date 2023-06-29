@@ -34,7 +34,7 @@ A transação de dados ocorre em três camadas:
 
 ![image](media/model.png)
 
-## 📝 Tecnologias e Languagens Utilizadas
+## 📝 Tecnologias e Linguagens Utilizadas
 
 - **Java**
 - **Spring Boot**
